@@ -7,6 +7,10 @@ Boxwise makes it easy for organizations (such as refugee camps) to distribute do
 
 This is a new version of [the original Drop App used by Drop In The Ocean](https://www.drapenihavet.no/en/the-drop-app-2/). The original app was limited to just managing a single organization. This is a rewrite to support multiple organizations on a centrally hosted system.
 
+## Contributing
+
+We are always looking for help. Working on this project is an opportunity to use your skills to help thousands of refugees. [Our contributing guide](CONTRIBUTING.md) has more information.
+
 ## Setting up development environment
 
 1.  [Install Node.js](https://nodejs.org/en/download/). You'll also need to install Yarn:
@@ -56,6 +60,14 @@ This is a new version of [the original Drop App used by Drop In The Ocean](https
 ## Running tests
 
     $ yarn test
+
+## Running the database tests
+
+We have some tests that check the Firestore database security rules are set up correctly. They have to run against a real database.
+
+To set it up, click "⚙️" then "Project Settings" in the development app you created above. Click the "Service Accounts" tab, then click "Generate New Private key". Save this file to `.service-account-key.json` in the root of the project. Take care not to share it or commit it to the repository!
+
+Now, when you run `yarn test`, the database tests will run automatically.
 
 ## Community
 
