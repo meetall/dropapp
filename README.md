@@ -27,27 +27,21 @@ We are always looking for help. Working on this project is an opportunity to use
 
 3.  Set up an app on Firebase to use as your development environment.
 
-    - Go to https://console.firebase.google.com/ and click "Add project".
-    - Enter "Boxwise Development" into the name field and click "Create Project"
-    - Once that has completed, click "Add Firebase to your web app"
-    - Copy the configuration values in that code into a file called `.env.local`, without any quotes, in this format:
+    - Go to https://console.firebase.google.com/ and click "Add project";
+    - Enter "Boxwise Development" into the name field and click "Create Project";
+    - Click "Database" in the left hand menu, click "Get Started" underneath Cloud Firestore, then click "Enable";
+    - Click "Authentication" in the left hand menu, then the "Sign-in method" tab, then click "Email/Password", flip the first "Enable" switch, then click "Save".
 
-          REACT_APP_FIREBASE_API_KEY=...
-          REACT_APP_FIREBASE_AUTH_DOMAIN=...
-          REACT_APP_FIREBASE_DATABASE_URL=...
-          REACT_APP_FIREBASE_PROJECT_ID=...
-          REACT_APP_FIREBASE_STORAGE_BUCKET=...
-          REACT_APP_FIREBASE_MESSAGING_SENDER_ID=...
+4. Create a new local config running `yarn setup`, filling with the Firebase project ID (you may be asked to login). This will create a `.env.local` file.
+    - **How to get the Firebase project ID:** Click on the settings gear next to "Project Overview". A dropdown menu will be shown, click on "Project Configuration".
+    The project ID will be listed on first card (Your project). Will be the item right over the API key.
 
-    - Click "Database" in the left hand menu, click "Get Started" underneath Cloud Firestore, then click "Enable".
-    - Click "Authentication" in the left hand menu, click "Email/Password", flip the first "Enable" switch, then click "Save".
-
-4.  Log into Firebase, then select the app you created in the previous step. Give it the alias "development".
+5.  Log into Firebase, then select the app you created in the previous step. Give it the alias "development".
 
         $ yarn run firebase login
         $ yarn run firebase use --add
 
-5.  Deploy database rules to your development app.
+6.  Deploy database rules to your development app.
 
         $ yarn run deploy-firestore
 
@@ -57,9 +51,24 @@ We are always looking for help. Working on this project is an opportunity to use
 
     $ yarn start
 
+The first thing you'll want to do when running a new development environment is set up an organization. [The development environment currently has no test data.](https://github.com/boxwise/boxwise/issues/24)
+
+## Creating a test account
+
+To be able to use the app locally you will need to create a user account. This can be accomplished by navigating to http://localhost:3000/create-organization and following the instructions on screen.
+
 ## Running tests
 
     $ yarn test
+
+If you encounter "Error: EMFILE: too many open files" error in this step, try to install [Watchman](https://facebook.github.io/watchman/docs/install.html). Make sure that `brew` is installed in your machine. 
+    
+    // install brew
+    $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    $ brew update
+    
+    // install Watchman
+    $ brew install watchman
 
 ## Running the database tests
 

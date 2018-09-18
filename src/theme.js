@@ -1,6 +1,6 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 
-const fontFamily = '"Open Sans", Helvetica, Arial, sans-serif';
+export const fontFamily = '"Open Sans", Helvetica, Arial, sans-serif';
 
 const theme = createMuiTheme({
   overrides: {
@@ -43,6 +43,15 @@ const theme = createMuiTheme({
       dark: "#006da7",
       contrastText: "#fff"
     }
+  }
+});
+
+export const drawerTheme = createMuiTheme({
+  typography: {
+    fontFamily: fontFamily
+  },
+  palette: {
+    type: "dark"
   }
 });
 

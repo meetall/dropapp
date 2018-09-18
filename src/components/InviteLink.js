@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Snackbar from "@material-ui/core/Snackbar";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import Progress from "./Progress.js";
 import { getOrAddInvite, createInviteLink } from "../queries/invites";
 import { waitForProfile, handleError } from "../utils";
 
@@ -18,7 +18,7 @@ class InviteLink extends React.Component {
   };
 
   componentDidMount() {
-    getOrAddInvite(this.props.profile.organization.ref)
+    getOrAddInvite(this.props.profile.data.organization.ref)
       .then(invite => {
         this.setState({
           isFetching: false,
@@ -30,17 +30,19 @@ class InviteLink extends React.Component {
 
   render() {
     const { extra } = this.props;
-    if (this.state.isFetching) {
-      return <CircularProgress />;
+    const { inviteLink, isFetching, snackbarOpen } = this.state;
+
+    if (isFetching) {
+      return <Progress />;
     }
     return (
       <div>
         <Typography variant="body1" gutterBottom>
           To invite people to your organization, send them this link:
         </Typography>
-        <TextField value={this.state.inviteLink} fullWidth margin="normal" />
+        <TextField value={inviteLink} fullWidth margin="normal" />
         <CopyToClipboard
-          text={this.state.inviteLink}
+          text={inviteLink}
           onCopy={() => this.setState({ snackbarOpen: true })}
         >
           <Button color="primary">Copy to clipboard</Button>
@@ -50,7 +52,7 @@ class InviteLink extends React.Component {
             vertical: "bottom",
             horizontal: "center"
           }}
-          open={this.state.snackbarOpen}
+          open={snackbarOpen}
           autoHideDuration={2000}
           onClose={() => {
             this.setState({ snackbarOpen: false });

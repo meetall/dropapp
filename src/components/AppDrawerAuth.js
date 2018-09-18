@@ -4,24 +4,39 @@ import { Link } from "react-router-dom";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import Progress from "./Progress.js";
 
-const AppDrawerAuth = ({ isFetching, user, profile, onSignOut, onClose }) => {
-  if (isFetching) {
-    return <CircularProgress />;
+const AppDrawerAuth = ({
+  notAuthenticated,
+  loading,
+  user,
+  profile,
+  onSignOut,
+  onPasswordChange,
+  onClose
+}) => {
+  if (loading) {
+    return <Progress />;
+  } else if (notAuthenticated) {
+    return null;
   }
+
+  const { email } = user.data;
+  const { name, organization } = profile.data;
+
   return (
     <List>
       <ListItem>
-        <ListItemText secondary={`Signed in as ${user.email}`} />
+        <ListItemText secondary={`Signed in as ${name ? name : email}`} />
       </ListItem>
       <ListItem>
-        <ListItemText
-          secondary={`Organization: ${profile.organization.name}`}
-        />
+        <ListItemText secondary={`Organization: ${organization.name}`} />
       </ListItem>
       <ListItem component={Link} to="/invite" onClick={onClose} button>
         <ListItemText primary="Invite people" />
+      </ListItem>
+      <ListItem component={Link} to="/password" onClick={onClose} button>
+        <ListItemText primary="Change password" />
       </ListItem>
       <ListItem button>
         <ListItemText primary="Sign out" onClick={onSignOut} />
@@ -31,7 +46,7 @@ const AppDrawerAuth = ({ isFetching, user, profile, onSignOut, onClose }) => {
 };
 
 AppDrawerAuth.propTypes = {
-  isFetching: PropTypes.bool,
+  loading: PropTypes.bool,
   user: PropTypes.object,
   profile: PropTypes.object,
   onSignOut: PropTypes.func,
